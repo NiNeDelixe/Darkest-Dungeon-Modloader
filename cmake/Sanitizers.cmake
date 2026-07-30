@@ -1,5 +1,5 @@
 function(
-  myproject_enable_sanitizers
+  Darkest_Dungeon_Modloader_enable_sanitizers
   project_name
   ENABLE_SANITIZER_ADDRESS
   ENABLE_SANITIZER_LEAK
@@ -19,7 +19,7 @@ function(
       # -fsanitize=leak on macOS, including arm64). On Apple, leak detection
       # is provided by AddressSanitizer with ASAN_OPTIONS=detect_leaks=1.
       if(APPLE)
-        message(WARNING "Leak sanitizer is not supported on Apple platforms; ignoring myproject_ENABLE_SANITIZER_LEAK")
+        message(WARNING "Leak sanitizer is not supported on Apple platforms; ignoring Darkest_Dungeon_Modloader_ENABLE_SANITIZER_LEAK")
       else()
         list(APPEND SANITIZERS "leak")
       endif()
@@ -31,7 +31,7 @@ function(
 
     if(${ENABLE_SANITIZER_THREAD})
       if("address" IN_LIST SANITIZERS OR "leak" IN_LIST SANITIZERS)
-        message(${myproject_WARNING_TYPE} "Thread sanitizer does not work with Address and Leak sanitizer enabled")
+        message(${Darkest_Dungeon_Modloader_WARNING_TYPE} "Thread sanitizer does not work with Address and Leak sanitizer enabled")
       else()
         list(APPEND SANITIZERS "thread")
       endif()
@@ -39,13 +39,13 @@ function(
 
     if(${ENABLE_SANITIZER_MEMORY} AND CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
       message(
-        ${myproject_WARNING_TYPE}
+        ${Darkest_Dungeon_Modloader_WARNING_TYPE}
           "Memory sanitizer requires all the code (including libc++) to be MSan-instrumented otherwise it reports false positives"
       )
       if("address" IN_LIST SANITIZERS
          OR "thread" IN_LIST SANITIZERS
          OR "leak" IN_LIST SANITIZERS)
-        message(${myproject_WARNING_TYPE} "Memory sanitizer does not work with Address, Thread or Leak sanitizer enabled")
+        message(${Darkest_Dungeon_Modloader_WARNING_TYPE} "Memory sanitizer does not work with Address, Thread or Leak sanitizer enabled")
       else()
         list(APPEND SANITIZERS "memory")
       endif()
@@ -58,7 +58,7 @@ function(
        OR ${ENABLE_SANITIZER_UNDEFINED_BEHAVIOR}
        OR ${ENABLE_SANITIZER_THREAD}
        OR ${ENABLE_SANITIZER_MEMORY})
-      message(${myproject_WARNING_TYPE} "MSVC only supports address sanitizer")
+      message(${Darkest_Dungeon_Modloader_WARNING_TYPE} "MSVC only supports address sanitizer")
     endif()
   endif()
 

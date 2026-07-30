@@ -6,7 +6,7 @@ include(CheckCXXCompilerFlag)
 include(CheckCXXSourceCompiles)
 
 
-macro(myproject_supports_sanitizers)
+macro(Darkest_Dungeon_Modloader_supports_sanitizers)
   # Emscripten doesn't support sanitizers
   if(EMSCRIPTEN)
     set(SUPPORTS_UBSAN OFF)
@@ -57,125 +57,125 @@ macro(myproject_supports_sanitizers)
   endif()
 endmacro()
 
-macro(myproject_setup_options)
-  option(myproject_ENABLE_HARDENING "Enable hardening" ON)
-  option(myproject_ENABLE_COVERAGE "Enable coverage reporting" OFF)
+macro(Darkest_Dungeon_Modloader_setup_options)
+  option(Darkest_Dungeon_Modloader_ENABLE_HARDENING "Enable hardening" ON)
+  option(Darkest_Dungeon_Modloader_ENABLE_COVERAGE "Enable coverage reporting" OFF)
   cmake_dependent_option(
-    myproject_ENABLE_GLOBAL_HARDENING
+    Darkest_Dungeon_Modloader_ENABLE_GLOBAL_HARDENING
     "Attempt to push hardening options to built dependencies"
     ON
-    myproject_ENABLE_HARDENING
+    Darkest_Dungeon_Modloader_ENABLE_HARDENING
     OFF)
 
-  myproject_supports_sanitizers()
+  Darkest_Dungeon_Modloader_supports_sanitizers()
 
-  if(NOT PROJECT_IS_TOP_LEVEL OR myproject_PACKAGING_MAINTAINER_MODE)
-    option(myproject_ENABLE_IPO "Enable IPO/LTO" OFF)
-    option(myproject_WARNINGS_AS_ERRORS "Treat Warnings As Errors" OFF)
-    option(myproject_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
-    option(myproject_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
-    option(myproject_ENABLE_CLANG_TIDY "Enable clang-tidy" OFF)
-    option(myproject_ENABLE_CPPCHECK "Enable cpp-check analysis" OFF)
-    option(myproject_ENABLE_PCH "Enable precompiled headers" OFF)
-    option(myproject_ENABLE_CACHE "Enable ccache" OFF)
+  if(NOT PROJECT_IS_TOP_LEVEL OR Darkest_Dungeon_Modloader_PACKAGING_MAINTAINER_MODE)
+    option(Darkest_Dungeon_Modloader_ENABLE_IPO "Enable IPO/LTO" OFF)
+    option(Darkest_Dungeon_Modloader_WARNINGS_AS_ERRORS "Treat Warnings As Errors" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_CLANG_TIDY "Enable clang-tidy" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_CPPCHECK "Enable cpp-check analysis" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_PCH "Enable precompiled headers" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_CACHE "Enable ccache" OFF)
   elseif(ENABLE_DEVELOPER_MODE)
-    option(myproject_ENABLE_IPO "Enable IPO/LTO" ON)
-    option(myproject_WARNINGS_AS_ERRORS "Treat Warnings As Errors" ON)
-    option(myproject_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" ${SUPPORTS_ASAN})
-    option(myproject_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" ${SUPPORTS_UBSAN})
-    option(myproject_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
-    option(myproject_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
-    option(myproject_ENABLE_CLANG_TIDY "Enable clang-tidy" ON)
-    option(myproject_ENABLE_CPPCHECK "Enable cpp-check analysis" ON)
-    option(myproject_ENABLE_PCH "Enable precompiled headers" OFF)
-    option(myproject_ENABLE_CACHE "Enable ccache" ON)
+    option(Darkest_Dungeon_Modloader_ENABLE_IPO "Enable IPO/LTO" ON)
+    option(Darkest_Dungeon_Modloader_WARNINGS_AS_ERRORS "Treat Warnings As Errors" ON)
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" ${SUPPORTS_ASAN})
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" ${SUPPORTS_UBSAN})
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_CLANG_TIDY "Enable clang-tidy" ON)
+    option(Darkest_Dungeon_Modloader_ENABLE_CPPCHECK "Enable cpp-check analysis" ON)
+    option(Darkest_Dungeon_Modloader_ENABLE_PCH "Enable precompiled headers" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_CACHE "Enable ccache" ON)
   else()
-    option(myproject_ENABLE_IPO "Enable IPO/LTO" ON)
-    option(myproject_WARNINGS_AS_ERRORS "Treat Warnings As Errors" OFF)
-    option(myproject_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
-    option(myproject_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
-    option(myproject_ENABLE_CLANG_TIDY "Enable clang-tidy" OFF)
-    option(myproject_ENABLE_CPPCHECK "Enable cpp-check analysis" OFF)
-    option(myproject_ENABLE_PCH "Enable precompiled headers" OFF)
-    option(myproject_ENABLE_CACHE "Enable ccache" ON)
+    option(Darkest_Dungeon_Modloader_ENABLE_IPO "Enable IPO/LTO" ON)
+    option(Darkest_Dungeon_Modloader_WARNINGS_AS_ERRORS "Treat Warnings As Errors" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_CLANG_TIDY "Enable clang-tidy" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_CPPCHECK "Enable cpp-check analysis" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_PCH "Enable precompiled headers" OFF)
+    option(Darkest_Dungeon_Modloader_ENABLE_CACHE "Enable ccache" ON)
   endif()
 
   if(NOT PROJECT_IS_TOP_LEVEL)
     mark_as_advanced(
-      myproject_ENABLE_IPO
-      myproject_WARNINGS_AS_ERRORS
-      myproject_ENABLE_SANITIZER_ADDRESS
-      myproject_ENABLE_SANITIZER_LEAK
-      myproject_ENABLE_SANITIZER_UNDEFINED
-      myproject_ENABLE_SANITIZER_THREAD
-      myproject_ENABLE_SANITIZER_MEMORY
-      myproject_ENABLE_UNITY_BUILD
-      myproject_ENABLE_CLANG_TIDY
-      myproject_ENABLE_CPPCHECK
-      myproject_ENABLE_LIZARD
-      myproject_ENABLE_BLOATY
-      myproject_ENABLE_COVERAGE
-      myproject_ENABLE_PCH
-      myproject_ENABLE_CACHE)
+      Darkest_Dungeon_Modloader_ENABLE_IPO
+      Darkest_Dungeon_Modloader_WARNINGS_AS_ERRORS
+      Darkest_Dungeon_Modloader_ENABLE_SANITIZER_ADDRESS
+      Darkest_Dungeon_Modloader_ENABLE_SANITIZER_LEAK
+      Darkest_Dungeon_Modloader_ENABLE_SANITIZER_UNDEFINED
+      Darkest_Dungeon_Modloader_ENABLE_SANITIZER_THREAD
+      Darkest_Dungeon_Modloader_ENABLE_SANITIZER_MEMORY
+      Darkest_Dungeon_Modloader_ENABLE_UNITY_BUILD
+      Darkest_Dungeon_Modloader_ENABLE_CLANG_TIDY
+      Darkest_Dungeon_Modloader_ENABLE_CPPCHECK
+      Darkest_Dungeon_Modloader_ENABLE_LIZARD
+      Darkest_Dungeon_Modloader_ENABLE_BLOATY
+      Darkest_Dungeon_Modloader_ENABLE_COVERAGE
+      Darkest_Dungeon_Modloader_ENABLE_PCH
+      Darkest_Dungeon_Modloader_ENABLE_CACHE)
   endif()
 
-  myproject_check_libfuzzer_support(LIBFUZZER_SUPPORTED)
-  if(LIBFUZZER_SUPPORTED AND (myproject_ENABLE_SANITIZER_ADDRESS OR myproject_ENABLE_SANITIZER_THREAD OR myproject_ENABLE_SANITIZER_UNDEFINED))
+  Darkest_Dungeon_Modloader_check_libfuzzer_support(LIBFUZZER_SUPPORTED)
+  if(LIBFUZZER_SUPPORTED AND (Darkest_Dungeon_Modloader_ENABLE_SANITIZER_ADDRESS OR Darkest_Dungeon_Modloader_ENABLE_SANITIZER_THREAD OR Darkest_Dungeon_Modloader_ENABLE_SANITIZER_UNDEFINED))
     set(DEFAULT_FUZZER ON)
   else()
     set(DEFAULT_FUZZER OFF)
   endif()
 
-  option(myproject_BUILD_FUZZ_TESTS "Enable fuzz testing executable" ${DEFAULT_FUZZER})
+  option(Darkest_Dungeon_Modloader_BUILD_FUZZ_TESTS "Enable fuzz testing executable" ${DEFAULT_FUZZER})
 
 endmacro()
 
-macro(myproject_global_options)
-  if(myproject_ENABLE_IPO)
+macro(Darkest_Dungeon_Modloader_global_options)
+  if(Darkest_Dungeon_Modloader_ENABLE_IPO)
     include(cmake/InterproceduralOptimization.cmake)
-    myproject_enable_ipo()
+    Darkest_Dungeon_Modloader_enable_ipo()
   endif()
 
-  myproject_supports_sanitizers()
+  Darkest_Dungeon_Modloader_supports_sanitizers()
 
-  if(myproject_ENABLE_HARDENING AND myproject_ENABLE_GLOBAL_HARDENING)
+  if(Darkest_Dungeon_Modloader_ENABLE_HARDENING AND Darkest_Dungeon_Modloader_ENABLE_GLOBAL_HARDENING)
     include(cmake/Hardening.cmake)
     if(NOT SUPPORTS_UBSAN 
-       OR myproject_ENABLE_SANITIZER_UNDEFINED
-       OR myproject_ENABLE_SANITIZER_ADDRESS
-       OR myproject_ENABLE_SANITIZER_THREAD
-       OR myproject_ENABLE_SANITIZER_LEAK)
+       OR Darkest_Dungeon_Modloader_ENABLE_SANITIZER_UNDEFINED
+       OR Darkest_Dungeon_Modloader_ENABLE_SANITIZER_ADDRESS
+       OR Darkest_Dungeon_Modloader_ENABLE_SANITIZER_THREAD
+       OR Darkest_Dungeon_Modloader_ENABLE_SANITIZER_LEAK)
       set(ENABLE_UBSAN_MINIMAL_RUNTIME FALSE)
     else()
       set(ENABLE_UBSAN_MINIMAL_RUNTIME TRUE)
     endif()
-    message("${myproject_ENABLE_HARDENING} ${ENABLE_UBSAN_MINIMAL_RUNTIME} ${myproject_ENABLE_SANITIZER_UNDEFINED}")
-    myproject_enable_hardening(myproject_options ON ${ENABLE_UBSAN_MINIMAL_RUNTIME})
+    message("${Darkest_Dungeon_Modloader_ENABLE_HARDENING} ${ENABLE_UBSAN_MINIMAL_RUNTIME} ${Darkest_Dungeon_Modloader_ENABLE_SANITIZER_UNDEFINED}")
+    Darkest_Dungeon_Modloader_enable_hardening(Darkest_Dungeon_Modloader_options ON ${ENABLE_UBSAN_MINIMAL_RUNTIME})
   endif()
 endmacro()
 
-macro(myproject_local_options)
+macro(Darkest_Dungeon_Modloader_local_options)
   if(PROJECT_IS_TOP_LEVEL)
     include(cmake/StandardProjectSettings.cmake)
   endif()
 
-  add_library(myproject_warnings INTERFACE)
-  add_library(myproject_options INTERFACE)
+  add_library(Darkest_Dungeon_Modloader_warnings INTERFACE)
+  add_library(Darkest_Dungeon_Modloader_options INTERFACE)
 
   include(cmake/CompilerWarnings.cmake)
-  myproject_set_project_warnings(
-    myproject_warnings
-    ${myproject_WARNINGS_AS_ERRORS}
+  Darkest_Dungeon_Modloader_set_project_warnings(
+    Darkest_Dungeon_Modloader_warnings
+    ${Darkest_Dungeon_Modloader_WARNINGS_AS_ERRORS}
     ""
     ""
     ""
@@ -186,74 +186,74 @@ macro(myproject_local_options)
 
   if(NOT EMSCRIPTEN)
     include(cmake/Sanitizers.cmake)
-    myproject_enable_sanitizers(
-      myproject_options
-      ${myproject_ENABLE_SANITIZER_ADDRESS}
-      ${myproject_ENABLE_SANITIZER_LEAK}
-      ${myproject_ENABLE_SANITIZER_UNDEFINED}
-      ${myproject_ENABLE_SANITIZER_THREAD}
-      ${myproject_ENABLE_SANITIZER_MEMORY})
+    Darkest_Dungeon_Modloader_enable_sanitizers(
+      Darkest_Dungeon_Modloader_options
+      ${Darkest_Dungeon_Modloader_ENABLE_SANITIZER_ADDRESS}
+      ${Darkest_Dungeon_Modloader_ENABLE_SANITIZER_LEAK}
+      ${Darkest_Dungeon_Modloader_ENABLE_SANITIZER_UNDEFINED}
+      ${Darkest_Dungeon_Modloader_ENABLE_SANITIZER_THREAD}
+      ${Darkest_Dungeon_Modloader_ENABLE_SANITIZER_MEMORY})
   endif()
 
-  set_target_properties(myproject_options PROPERTIES UNITY_BUILD ${myproject_ENABLE_UNITY_BUILD})
+  set_target_properties(Darkest_Dungeon_Modloader_options PROPERTIES UNITY_BUILD ${Darkest_Dungeon_Modloader_ENABLE_UNITY_BUILD})
 
-  if(myproject_ENABLE_PCH)
+  if(Darkest_Dungeon_Modloader_ENABLE_PCH)
     target_precompile_headers(
-      myproject_options
+      Darkest_Dungeon_Modloader_options
       INTERFACE
       <vector>
       <string>
       <utility>)
   endif()
 
-  if(myproject_ENABLE_CACHE)
+  if(Darkest_Dungeon_Modloader_ENABLE_CACHE)
     include(cmake/Cache.cmake)
-    myproject_enable_cache()
+    Darkest_Dungeon_Modloader_enable_cache()
   endif()
 
   include(cmake/StaticAnalyzers.cmake)
-  if(myproject_ENABLE_CLANG_TIDY)
-    myproject_enable_clang_tidy(myproject_options ${myproject_WARNINGS_AS_ERRORS})
+  if(Darkest_Dungeon_Modloader_ENABLE_CLANG_TIDY)
+    Darkest_Dungeon_Modloader_enable_clang_tidy(Darkest_Dungeon_Modloader_options ${Darkest_Dungeon_Modloader_WARNINGS_AS_ERRORS})
   endif()
 
-  if(myproject_ENABLE_CPPCHECK)
-    myproject_enable_cppcheck(${myproject_WARNINGS_AS_ERRORS} "" # override cppcheck options
+  if(Darkest_Dungeon_Modloader_ENABLE_CPPCHECK)
+    Darkest_Dungeon_Modloader_enable_cppcheck(${Darkest_Dungeon_Modloader_WARNINGS_AS_ERRORS} "" # override cppcheck options
     )
   endif()
   
-  if(myproject_ENABLE_LIZARD)
-    myproject_enable_lizard(${myproject_WARNINGS_AS_ERRORS})
+  if(Darkest_Dungeon_Modloader_ENABLE_LIZARD)
+    Darkest_Dungeon_Modloader_enable_lizard(${Darkest_Dungeon_Modloader_WARNINGS_AS_ERRORS})
   endif()
   
-  if(myproject_ENABLE_BLOATY)
-    myproject_enable_bloaty()
+  if(Darkest_Dungeon_Modloader_ENABLE_BLOATY)
+    Darkest_Dungeon_Modloader_enable_bloaty()
   endif()
 
-  if(myproject_ENABLE_COVERAGE)
+  if(Darkest_Dungeon_Modloader_ENABLE_COVERAGE)
     include(cmake/Tests.cmake)
-    myproject_enable_coverage(myproject_options)
+    Darkest_Dungeon_Modloader_enable_coverage(Darkest_Dungeon_Modloader_options)
   endif()
 
-  if(myproject_WARNINGS_AS_ERRORS)
+  if(Darkest_Dungeon_Modloader_WARNINGS_AS_ERRORS)
     check_cxx_compiler_flag("-Wl,--fatal-warnings" LINKER_FATAL_WARNINGS)
     if(LINKER_FATAL_WARNINGS)
       # This is not working consistently, so disabling for now
-      # target_link_options(myproject_options INTERFACE -Wl,--fatal-warnings)
+      # target_link_options(Darkest_Dungeon_Modloader_options INTERFACE -Wl,--fatal-warnings)
     endif()
   endif()
 
-  if(myproject_ENABLE_HARDENING AND NOT myproject_ENABLE_GLOBAL_HARDENING)
+  if(Darkest_Dungeon_Modloader_ENABLE_HARDENING AND NOT Darkest_Dungeon_Modloader_ENABLE_GLOBAL_HARDENING)
     include(cmake/Hardening.cmake)
     if(NOT SUPPORTS_UBSAN 
-       OR myproject_ENABLE_SANITIZER_UNDEFINED
-       OR myproject_ENABLE_SANITIZER_ADDRESS
-       OR myproject_ENABLE_SANITIZER_THREAD
-       OR myproject_ENABLE_SANITIZER_LEAK)
+       OR Darkest_Dungeon_Modloader_ENABLE_SANITIZER_UNDEFINED
+       OR Darkest_Dungeon_Modloader_ENABLE_SANITIZER_ADDRESS
+       OR Darkest_Dungeon_Modloader_ENABLE_SANITIZER_THREAD
+       OR Darkest_Dungeon_Modloader_ENABLE_SANITIZER_LEAK)
       set(ENABLE_UBSAN_MINIMAL_RUNTIME FALSE)
     else()
       set(ENABLE_UBSAN_MINIMAL_RUNTIME TRUE)
     endif()
-    myproject_enable_hardening(myproject_options OFF ${ENABLE_UBSAN_MINIMAL_RUNTIME})
+    Darkest_Dungeon_Modloader_enable_hardening(Darkest_Dungeon_Modloader_options OFF ${ENABLE_UBSAN_MINIMAL_RUNTIME})
   endif()
 
 endmacro()

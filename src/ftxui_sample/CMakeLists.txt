@@ -2,8 +2,8 @@ add_executable(intro main.cpp)
 
 target_link_libraries(
   intro
-  PRIVATE myproject::myproject_options
-          myproject::myproject_warnings
+  PRIVATE Darkest_Dungeon_Modloader::Darkest_Dungeon_Modloader_options
+          Darkest_Dungeon_Modloader::Darkest_Dungeon_Modloader_warnings
           CLI11::CLI11
           fmt::fmt
           spdlog::spdlog
@@ -13,13 +13,13 @@ target_link_libraries(
           ftxui::component)
 
 
-myproject_configure_linker(intro)
+Darkest_Dungeon_Modloader_configure_linker(intro)
 
 target_include_directories(intro PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")
 
 # Apply WASM-specific configuration
 if(EMSCRIPTEN)
-  myproject_configure_wasm_target(intro
+  Darkest_Dungeon_Modloader_configure_wasm_target(intro
     TITLE "Intro - FTXUI Sample"
     DESCRIPTION "FTXUI-based terminal application"
   )

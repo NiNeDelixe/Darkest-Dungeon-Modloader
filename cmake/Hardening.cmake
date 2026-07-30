@@ -1,7 +1,7 @@
 include(CheckCXXCompilerFlag)
 
 macro(
-  myproject_enable_hardening
+  Darkest_Dungeon_Modloader_enable_hardening
   target
   global
   ubsan_minimal_runtime)
