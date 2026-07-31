@@ -107,7 +107,7 @@ if(MSVC)
 endif()
 
 # set the startup project for the "play" button in MSVC
-set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT intro)
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT SDL2)
 
 if(CMAKE_SKIP_INSTALL_RULES)
   return()
@@ -119,7 +119,7 @@ include(cmake/PackageProject.cmake)
 # we know we want to ship
 Darkest_Dungeon_Modloader_package_project(
   TARGETS
-  intro
+  SDL2
   Darkest_Dungeon_Modloader_options
   Darkest_Dungeon_Modloader_warnings
   # FIXME: this does not work! CK

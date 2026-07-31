@@ -80,4 +80,16 @@ function(Darkest_Dungeon_Modloader_setup_dependencies)
       "main")
   endif()
 
+  if(NOT TARGET minhook)
+    cpmaddpackage(
+      NAME
+      minhook
+      VERSION
+      1.3.4
+      GITHUB_REPOSITORY
+      "TsudaKageyu/minhook"
+      SYSTEM
+      YES)
+  endif()
+
 endfunction()

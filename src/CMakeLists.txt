@@ -1,2 +1,2 @@
-add_subdirectory(sample_library)
-add_subdirectory(ftxui_sample)
+add_subdirectory(modloader/win/dll_injector)
+add_subdirectory(modloader/mods/example_mod)

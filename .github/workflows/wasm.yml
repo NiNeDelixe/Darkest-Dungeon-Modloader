@@ -1,4 +1,4 @@
-name: Build Intro WASM and Deploy to GitHub Pages
+name: Build modloader WASM and Deploy to GitHub Pages
 
 on:
   pull_request:

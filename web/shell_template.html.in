@@ -86,10 +86,10 @@
 
             <strong>Examples:</strong>
             <ul>
-                <li><code>intro.html?version</code></li>
-                <li><code>intro.html?h</code></li>
-                <li><code>intro.html?file=data.txt</code></li>
-                <li><code>intro.html?verbose&config=settings.json</code></li>
+                <li><code>modloader.html?version</code></li>
+                <li><code>modloader.html?h</code></li>
+                <li><code>modloader.html?file=data.txt</code></li>
+                <li><code>modloader.html?verbose&config=settings.json</code></li>
             </ul>
         </section>
     </main>
