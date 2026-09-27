@@ -1,8 +1,8 @@
 include(GenerateExportHeader)
 
 set(Python3_EXECUTABLE "python")
-set(INPUT_FUNCS_FILE  "${CMAKE_CURRENT_SOURCE_DIR}/dev/srcipts/dllopengl32functions.txt")
-set(GENERATOR_SCRIPT  "${CMAKE_CURRENT_SOURCE_DIR}/dev/srcipts/generate_forwarders.py")
+set(INPUT_FUNCS_FILE  "${CMAKE_CURRENT_SOURCE_DIR}/dev/scripts/dllopengl32functions.txt")
+set(GENERATOR_SCRIPT  "${CMAKE_CURRENT_SOURCE_DIR}/dev/scripts/generate_forwarders.py")
 set(GENERATED_DIR     "${CMAKE_CURRENT_BINARY_DIR}/generated")
 set(GENERATED_HEADER  "${GENERATED_DIR}/export_forwarders.h")
 
