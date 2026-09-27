@@ -7,9 +7,13 @@ cmake_policy(SET CMP0155 OLD)
 # so that it works well with tools like CPM or other
 # manual dependency management
 
+set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
+
+add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
+
 # Only set the cxx_standard if it is not set by someone else
 if (NOT DEFINED CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 23)
+  set(CMAKE_CXX_STANDARD 20)
 endif()
 
 # strongly encouraged to enable this globally to avoid conflicts between
@@ -107,7 +111,7 @@ if(MSVC)
 endif()
 
 # set the startup project for the "play" button in MSVC
-set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT SDL2)
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT darkest1_modloader)
 
 if(CMAKE_SKIP_INSTALL_RULES)
   return()
@@ -119,7 +123,7 @@ include(cmake/PackageProject.cmake)
 # we know we want to ship
 Darkest_Dungeon_Modloader_package_project(
   TARGETS
-  SDL2
+  darkest1_modloader
   Darkest_Dungeon_Modloader_options
   Darkest_Dungeon_Modloader_warnings
   # FIXME: this does not work! CK

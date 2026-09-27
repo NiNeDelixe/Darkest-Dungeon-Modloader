@@ -92,4 +92,30 @@ function(Darkest_Dungeon_Modloader_setup_dependencies)
       YES)
   endif()
 
+  if(NOT TARGET boost)
+    CPMAddPackage(
+      NAME Boost
+      VERSION 1.86.0 # Versions less than 1.85.0 may need patches for installation targets.
+      URL https://github.com/boostorg/boost/releases/download/boost-1.86.0/boost-1.86.0-cmake.tar.xz
+      URL_HASH SHA256=2c5ec5edcdff47ff55e27ed9560b0a0b94b07bd07ed9928b476150e16b0efc57
+      OPTIONS "BOOST_ENABLE_CMAKE ON" "BOOST_SKIP_INSTALL_RULES ON" # Set `OFF` for installation
+              "BUILD_SHARED_LIBS OFF" "BOOST_INCLUDE_LIBRARIES container\\\;asio\\\;dll\\\;filesystem\\\;log\\\;property_tree" # Note the escapes!
+    )
+  endif()
+  
+  
+
+  # if(NOT TARGET sdl2)
+  #   #set(SDL_STATIC OFF)
+  #   cpmaddpackage(
+  #     NAME
+  #     sdl2
+  #     GITHUB_REPOSITORY
+  #     "libsdl-org/SDL"
+  #     GIT_TAG
+  #     "release-2.0.4"
+  #     OPTIONS
+  #     "SDL_STATIC OFF")
+  # endif()
+
 endfunction()

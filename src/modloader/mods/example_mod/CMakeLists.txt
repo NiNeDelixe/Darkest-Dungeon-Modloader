@@ -5,7 +5,7 @@ include(GenerateExportHeader)
 #   main.cpp
 # )
 
-#add_executable(sdl2_modloader ${MAIN_SOURCES})
+#add_executable(darkest1_modloader ${MAIN_SOURCES})
 add_library(ExampleMod SHARED
     ExampleMod.cpp
 )
@@ -16,12 +16,13 @@ target_link_libraries(
   ExampleMod
   PRIVATE Darkest_Dungeon_Modloader::Darkest_Dungeon_Modloader_options
           Darkest_Dungeon_Modloader::Darkest_Dungeon_Modloader_warnings
+          minhook
 )
 
 
 Darkest_Dungeon_Modloader_configure_linker(ExampleMod)
 
-target_include_directories(ExampleMod PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")
+target_include_directories(ExampleMod PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include" ${CMAKE_SOURCE_DIR}/SDL2-2.0.4/include)
 
 # Apply WASM-specific configuration
 if(EMSCRIPTEN)
