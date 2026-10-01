@@ -12,18 +12,17 @@
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/spdlog.h>
 
+#include <cpptrace/cpptrace.hpp>
+#include <cpptrace/from_current.hpp>
+
 #include "export_forwarders.h"
+
+#include "Darkest1Modloader.hpp"
 
 namespace {
 
 std::shared_ptr<spdlog::logger> g_logger;
 std::unique_ptr<boost::dll::shared_library> g_core;
-
-using mod_loader_initialize_t = bool (*)();
-using mod_loader_shutdown_t = void (*)();
-
-mod_loader_initialize_t g_mod_loader_initialize = nullptr;
-mod_loader_shutdown_t g_mod_loader_shutdown = nullptr;
 
 HMODULE g_opengl32 = 0;
 HMODULE g_original_opengl32 = nullptr;
@@ -32,7 +31,7 @@ extern bool g_success_made_ldr_notification;
 
 void failed() 
 {
-    MessageBox(0, "Darkest1Loader: Unable to load the original opengl32.dll. Please report this to the developer.", "Darkest1Loader", 0);
+    MessageBox(0, TEXT("Darkest1Loader: Unable to load the original opengl32.dll. Please report this to the developer."), TEXT("Darkest1Loader"), 0);
     ExitProcess(0);
 }
 
@@ -56,6 +55,7 @@ void initialize_logger() {
         sinks.begin(),
         sinks.end());
 
+    g_logger->flush();
     g_logger->set_level(spdlog::level::trace);
     g_logger->flush_on(spdlog::level::info);
 
@@ -64,50 +64,23 @@ void initialize_logger() {
     spdlog::info("ModLoader logger initialized");
 }
 
-void initialize_core() {
-    try {
-        const auto core_path =
-            boost::filesystem::current_path() / "ModLoaderCore.dll";
-
-        spdlog::info("Loading ModLoaderCore: {}", core_path.string());
-
-        g_core = std::make_unique<boost::dll::shared_library>(
-            core_path,
-            boost::dll::load_mode::rtld_local);
-
-        g_mod_loader_initialize =
-            g_core->get<mod_loader_initialize_t>("ModLoaderInitialize");
-
-        g_mod_loader_shutdown =
-            g_core->get<mod_loader_shutdown_t>("ModLoaderShutdown");
-
-        spdlog::info("ModLoaderCore loaded");
-
-        if (!g_mod_loader_initialize()) {
-            spdlog::error("ModLoaderCore initialization failed");
-            g_mod_loader_initialize = nullptr;
-            g_mod_loader_shutdown = nullptr;
-            g_core.reset();
-            return;
-        }
-
-        spdlog::info("ModLoaderCore initialized");
-    } catch (const std::exception& exception) {
+void initialize_core(HMODULE modul) 
+{
+    CPPTRACE_TRY 
+    {
+        g_loader = std::make_unique<Darkest1Modloader>(modul);
+    } 
+    CPPTRACE_CATCH (const std::exception& exception) 
+    {
         spdlog::error(
-            "Failed to load ModLoaderCore: {}",
-            exception.what());
+            "Failed to load ModLoaderCore: {}\n{}",
+            exception.what(), cpptrace::from_current_exception().to_string());
 
         g_core.reset();
     }
 }
 
 void shutdown_core() {
-    if (g_mod_loader_shutdown != nullptr) {
-        spdlog::info("Shutting down ModLoaderCore");
-        g_mod_loader_shutdown();
-        g_mod_loader_shutdown = nullptr;
-        g_mod_loader_initialize = nullptr;
-    }
 
     g_core.reset();
 
@@ -140,28 +113,27 @@ bool load_opengl32()
     return false;
 }
 
-DWORD WINAPI initialization_thread(LPVOID) 
+DWORD WINAPI initialization_thread(HMODULE module) 
 {
-    load_opengl32();
     initialize_logger();
-    initialize_core();
+    initialize_core(module);
 
     return 0;
 }
 
 }  // namespace
 
-extern "C" {
+// extern "C" {
 
-FARPROC get_original_export(const char* name) {
-    if (g_original_opengl32 == nullptr) {
-        return nullptr;
-    }
+// FARPROC get_original_export(const char* name) {
+//     if (g_original_opengl32 == nullptr) {
+//         return nullptr;
+//     }
 
-    return GetProcAddress(g_original_opengl32, name);
-}
+//     return GetProcAddress(g_original_opengl32, name);
+// }
 
-}  // extern "C"
+// }  // extern "C"
 
 BOOL APIENTRY DllMain(HANDLE handle, DWORD reason, LPVOID reserved) 
 {
@@ -182,7 +154,7 @@ BOOL APIENTRY DllMain(HANDLE handle, DWORD reason, LPVOID reserved)
         HANDLE thread = CreateThread(
             nullptr,
             0,
-            initialization_thread,
+            (LPTHREAD_START_ROUTINE)initialization_thread,
             handle,
             0,
             nullptr);

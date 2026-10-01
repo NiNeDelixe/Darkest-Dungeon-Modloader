@@ -44,13 +44,31 @@ message(STATUS "   Exclude funcs:    '${EXCLUDE_FUNCS}'")
 message(STATUS "==========================================================")
 
 
-# set(MAIN_SOURCES
-#   main.cpp
-# )
+# SOURCES
 
-#add_executable(darkest1_modloader ${MAIN_SOURCES})
+set(HOOK_SOURCES
+  D3D11Hook.cpp
+  WindowsMessageHook.cpp
+  WindowFilter.cpp
+)
+
+set(MODLOADER_SOURCES
+  ModLoader.cpp
+  Darkest1Modloader.cpp
+)
+
+set(MAIN_SOURCES
+  main.cpp
+)
+
+set(ALL_SOURCES
+  ${MAIN_SOURCES}
+  ${MODLOADER_SOURCES}
+  ${HOOK_SOURCES}
+)
+
 add_library(darkest1_modloader SHARED
-    main.cpp
+    ${ALL_SOURCES}
 
     "${GENERATED_HEADER}"
 )
@@ -61,16 +79,26 @@ set_target_properties(darkest1_modloader PROPERTIES OUTPUT_NAME "OPENGL32")
 
 target_link_libraries(
   darkest1_modloader
-  PRIVATE Darkest_Dungeon_Modloader::Darkest_Dungeon_Modloader_options
-          Darkest_Dungeon_Modloader::Darkest_Dungeon_Modloader_warnings
-          minhook
-          Boost::asio 
-          Boost::container
-          Boost::dll
-          Boost::filesystem
-          Boost::log
-          Boost::property_tree
-          spdlog
+  PRIVATE 
+    Darkest_Dungeon_Modloader::Darkest_Dungeon_Modloader_options
+    Darkest_Dungeon_Modloader::Darkest_Dungeon_Modloader_warnings
+    minhook
+    Boost::asio 
+    Boost::container
+    Boost::dll
+    Boost::filesystem
+    Boost::log
+    Boost::property_tree
+    spdlog::spdlog
+    imgui
+    imguizmo::imguizmo
+    cpptrace::cpptrace
+    bddisasm::bddisasm
+    kananlib
+
+    DirectXTK
+		DirectXTK12
+    d3d11
 )
 
 
@@ -81,12 +109,14 @@ target_include_directories(darkest1_modloader
     "${CMAKE_BINARY_DIR}/configured_files/include"
     "${GENERATED_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/src"
+    "${CMAKE_CURRENT_SOURCE_DIR}"
+    "${CMAKE_SOURCE_DIR}/src/win"
 )
 
 # Apply WASM-specific configuration
-if(EMSCRIPTEN)
-  Darkest_Dungeon_Modloader_configure_wasm_target(darkest1_modloader
-    TITLE "darkest1_modloader - FTXUI Sample"
-    DESCRIPTION "FTXUI-based terminal application"
-  )
-endif()
+# if(EMSCRIPTEN)
+#   Darkest_Dungeon_Modloader_configure_wasm_target(darkest1_modloader
+#     TITLE "darkest1_modloader - FTXUI Sample"
+#     DESCRIPTION "FTXUI-based terminal application"
+#   )
+# endif()
