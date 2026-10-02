@@ -47,9 +47,10 @@ message(STATUS "==========================================================")
 # SOURCES
 
 set(HOOK_SOURCES
-  D3D11Hook.cpp
-  WindowsMessageHook.cpp
-  WindowFilter.cpp
+  hooks/D3D11Hook.cpp
+  hooks/WindowsMessageHook.cpp
+  hooks/WindowFilter.cpp
+  hooks/GLHook.cpp
 )
 
 set(MODLOADER_SOURCES

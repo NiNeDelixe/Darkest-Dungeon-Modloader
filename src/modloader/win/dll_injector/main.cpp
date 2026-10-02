@@ -19,7 +19,8 @@
 
 #include "Darkest1Modloader.hpp"
 
-namespace {
+namespace 
+{
 
 std::shared_ptr<spdlog::logger> g_logger;
 std::unique_ptr<boost::dll::shared_library> g_core;
@@ -35,13 +36,14 @@ void failed()
     ExitProcess(0);
 }
 
-void initialize_logger() {
+void initialize_logger() 
+{
     std::filesystem::create_directories("logs");
 
     auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
         "logs/modloader.log",
         5 * 1024 * 1024,
-        3);
+        3, true);
 
     auto msvc_sink = std::make_shared<spdlog::sinks::msvc_sink_mt>();
 
@@ -55,7 +57,6 @@ void initialize_logger() {
         sinks.begin(),
         sinks.end());
 
-    g_logger->flush();
     g_logger->set_level(spdlog::level::trace);
     g_logger->flush_on(spdlog::level::info);
 
@@ -80,7 +81,8 @@ void initialize_core(HMODULE modul)
     }
 }
 
-void shutdown_core() {
+void shutdown_core() 
+{
 
     g_core.reset();
 
@@ -91,14 +93,17 @@ bool load_opengl32()
 {
     std::scoped_lock _{g_load_mutex};
 
-    if (g_opengl32) {
+    if (g_opengl32) 
+    {
         return true;
     }
 
     wchar_t buffer[MAX_PATH]{0};
-    if (GetSystemDirectoryW(buffer, MAX_PATH) != 0) {
+    if (GetSystemDirectoryW(buffer, MAX_PATH) != 0) 
+    {
         // Load the original dinput8.dll
-        if ((g_opengl32 = LoadLibraryW((std::wstring{buffer} + L"\\OPENGL32.dll").c_str())) == NULL) {
+        if ((g_opengl32 = LoadLibraryW((std::wstring{buffer} + L"\\OPENGL32.dll").c_str())) == NULL) 
+        {
             failed();
             return false;
         }

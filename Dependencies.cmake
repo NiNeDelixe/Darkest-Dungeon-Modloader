@@ -185,6 +185,7 @@ function(Darkest_Dungeon_Modloader_setup_dependencies)
         ${imgui_SOURCE_DIR}/backends/imgui_impl_dx11.cpp
         ${imgui_SOURCE_DIR}/backends/imgui_impl_dx12.cpp
         ${imgui_SOURCE_DIR}/backends/imgui_impl_win32.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
     )
 
     target_include_directories(imgui PUBLIC

@@ -22,7 +22,7 @@ target_link_libraries(
 
 Darkest_Dungeon_Modloader_configure_linker(ExampleMod)
 
-target_include_directories(ExampleMod PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include" ${CMAKE_SOURCE_DIR}/SDL2-2.0.4/include)
+target_include_directories(ExampleMod PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")
 
 # Apply WASM-specific configuration
 if(EMSCRIPTEN)
